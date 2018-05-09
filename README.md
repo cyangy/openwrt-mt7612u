@@ -4,11 +4,9 @@ If you use latest LEDE ,  just overwrite the   **package/kernel/mt76**   with th
 
     $ make menuconfig
 to select the kernel module 
-```mermaid
-graph LR
-A[Kernel modules]  --> B[ Wireless Drivers ]
-B --> C[ kmod-mt76x2u ]
-```
+
+  Kernel modules  -->  Wireless Drivers-->  kmod-mt76x2u 
+
 # Known issue
 ## Just for my test on EA4500 v1  ，LEDE latest ，NetGear A6210
 
