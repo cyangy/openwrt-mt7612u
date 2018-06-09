@@ -9,8 +9,8 @@ PKG_LICENSE_FILES:=
 PKG_SOURCE_URL:=https://github.com/LorenzoBianconi/mt76.git
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_DATE:=mt76x2u
-PKG_SOURCE_VERSION:=ad0a3e912a16c7cc1325a2bfc42a803a45efa26a
-PKG_MIRROR_HASH:=098f84e6f7b4570a2ed9eab2328c21c93f1cbe32596068f47bd643d36500c79b
+PKG_SOURCE_VERSION:=7d0da428fbf605040063824471f7fd4ece2ce2d7
+PKG_MIRROR_HASH:=eca16864d2a2e2d133de1bd8e6f35bece6b113cb5d87ef65f2e3d2a5841370c6
 
 PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
 PKG_BUILD_PARALLEL:=1
@@ -41,6 +41,14 @@ define KernelPackage/mt76-core
 	$(PKG_BUILD_DIR)/mt76.ko
 endef
 
+define KernelPackage/mt76-usb
+  $(KernelPackage/mt76-default)
+  TITLE:=MediaTek MT76xx wireless driver mt76-usb.ko
+  DEPENDS+=+kmod-mt76-core
+  FILES:=\
+	$(PKG_BUILD_DIR)/mt76-usb.ko
+endef
+
 define KernelPackage/mt76x2
   $(KernelPackage/mt76-default)
   TITLE:=MediaTek MT76x2 wireless driver
@@ -62,7 +70,7 @@ endef
 define KernelPackage/mt76x2u
   $(KernelPackage/mt76-default)
   TITLE:=MediaTek MT76x2u wireless driver
-  DEPENDS+=+kmod-mt76x2-common
+  DEPENDS+=+kmod-mt76x2-common +kmod-mt76-usb
   FILES:=\
 	$(PKG_BUILD_DIR)/mt76x2u.ko
   AUTOLOAD:=$(call AutoProbe,mt76x2u)
@@ -135,6 +143,7 @@ define KernelPackage/mt7603/install
 endef
 
 $(eval $(call KernelPackage,mt76-core))
+$(eval $(call KernelPackage,mt76-usb))
 $(eval $(call KernelPackage,mt76x2))
 $(eval $(call KernelPackage,mt76x2-common))
 $(eval $(call KernelPackage,mt76x2u))
